@@ -1,0 +1,30 @@
+[gd_scene load_steps=4 format=3 uid="uid://do3lf316wfxdv"]
+
+[ext_resource type="Texture2D" uid="uid://15delwhk8kic" path="res://assets/grass.png" id="1_ntwyt"]
+[ext_resource type="Script" path="res://main.gd" id="1_us6n1"]
+[ext_resource type="PackedScene" uid="uid://vsnv4tp5ypjc" path="res://player/player.tscn" id="1_y53kh"]
+
+[node name="main" type="Node"]
+script = ExtResource("1_us6n1")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+texture = ExtResource("1_ntwyt")
+stretch_mode = 1
+
+[node name="Player" parent="." instance=ExtResource("1_y53kh")]
+position = Vector2(238, 375)
+scale = Vector2(3, 3)
+velocidad = 500
+
+[node name="ContenedorMonedas" type="Node" parent="."]
+
+[node name="InicioMarker2D" type="Marker2D" parent="."]
+position = Vector2(238, 300)
+
+[node name="JuegoTimer" type="Timer" parent="."]

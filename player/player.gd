@@ -44,8 +44,11 @@ func morirse():
 func on_player_area_entered(area):
 	if area.is_in_group("monedas"):
 		area.recoger()
-		emit_signal("recolectar")
+		emit_signal("recolectar","moneda")
 	if area.is_in_group("enemigos"):
 		emit_signal("herirse")
 		morirse()
+	if area.is_in_group("powerups"):
+		area.recoger()
+		emit_signal("recolectar","powerup")
 

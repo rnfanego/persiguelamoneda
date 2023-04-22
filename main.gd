@@ -1,6 +1,8 @@
 extends Node
 
 @onready var Coin = preload("res://moneda/moneda.tscn")
+@onready var Powerup = preload("res://powerup/powerup.tscn")
+@onready var Cactus = preload("res://cactus/cactus.tscn")
 @export var tiempoJuego : int
 
 var nivel := 1
@@ -18,6 +20,7 @@ func _ready():
 
 func nuevoJuego():
 	$InicioAudioStreamPlayer2.play()
+	$SpawnPowerupTimer.start()
 	playing = true
 	nivel = 1
 	score = 0
@@ -29,6 +32,11 @@ func nuevoJuego():
 	HUD.actScore(score)
 	HUD.actTimer(time_left)
 
+func crearCactus():
+	var cactus = Cactus.instantiate()
+	add_child(cactus)
+	cactus.position = Vector2(randf_range(0,screensize.x),randf_range(0,screensize.y))
+
 func _process(delta):
 	if playing and $ContenedorMonedas.get_child_count() == 0:
 		nivel += 1
@@ -37,6 +45,7 @@ func _process(delta):
 		agregaMonedas()
 
 func agregaMonedas():
+	crearCactus()
 	for i in range(4+nivel):
 		var coin = Coin.instantiate()
 		$ContenedorMonedas.add_child(coin)
@@ -57,12 +66,28 @@ func game_over():
 	HUD.mostrar_gameOver()
 	player.morirse()
 
-func _on_player_recolectar():
-	$CoinAudioStreamPlayer.play()
-	score += 1
-	HUD.actScore(score)
+func _on_player_recolectar(areaRecolectada):
+	match areaRecolectada:
+		"moneda":
+			$CoinAudioStreamPlayer.stream = load("res://assets/audio/Coin.wav")
+			$CoinAudioStreamPlayer.play()
+			score += 1
+			HUD.actScore(score)
+		"powerup":
+			$CoinAudioStreamPlayer.stream = load("res://assets/audio/Powerup.wav")
+			$CoinAudioStreamPlayer.play()
+			time_left += 3
+	
 
 
 func _on_player_herirse():
 	$MorirAudioStreamPlayer3.play()
 	game_over()
+
+
+func _on_spawn_powerup_timer_timeout():
+	if playing:
+		$SpawnPowerupTimer.wait_time = randi_range(3,10)
+		var powerup = Powerup.instantiate()
+		add_child(powerup)
+		powerup.position = Vector2(randf_range(0,screensize.x),randf_range(0,screensize.y))

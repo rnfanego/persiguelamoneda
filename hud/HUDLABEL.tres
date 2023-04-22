@@ -1,4 +1,7 @@
-[gd_resource type="LabelSettings" format=3 uid="uid://b52gkjvibwxdj"]
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://b52gkjvibwxdj"]
+
+[ext_resource type="FontFile" uid="uid://bbtyfe27tking" path="res://assets/Kenney Bold.ttf" id="1_2aadf"]
 
 [resource]
-font_size = 30
+font = ExtResource("1_2aadf")
+font_size = 23

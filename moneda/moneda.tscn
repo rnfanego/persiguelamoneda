@@ -77,4 +77,6 @@ stream = ExtResource("13_dp2t5")
 [node name="InicioTimer" type="Timer" parent="."]
 one_shot = true
 
+[connection signal="area_shape_entered" from="." to="." method="_on_area_shape_entered"]
+[connection signal="draw" from="." to="." method="_on_draw"]
 [connection signal="timeout" from="InicioTimer" to="." method="_on_inicio_timer_timeout"]

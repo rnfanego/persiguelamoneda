@@ -18,3 +18,15 @@ func eliminar():
 func _on_inicio_timer_timeout():
 	$AnimatedSprite2D.frame = 0
 	$AnimatedSprite2D.play()
+
+
+func _on_area_entered(area):
+	pass
+
+
+func _on_area_shape_entered(area_rid, area, area_shape_index, local_shape_index):
+	if area.is_in_group("enemigos"):
+		position = Vector2(randf_range(0,get_parent().get_parent().screensize.x),
+		randf_range(0,get_parent().get_parent().screensize.y))
+	
+	
